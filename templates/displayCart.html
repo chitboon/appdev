@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Suply Walrus - Cart Display{% endblock %}
+
+{% block content %}
+<h1 class="display-4">Cart</h1>
+<div>
+  {% if count == 0 %}
+  <p>There are no products in your cart.</p>
+  <p> Browse our Catalouges to add items. </p>
+  {% elif count == 1 %}
+  <p>There is 1 Product in your cart.</p>
+  {% else %}
+  <p>There are {{ count }} Products in your Cart.</p>
+  {% endif %}
+</div>
+<div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cart in cart_list %}
+        <tr>
+            <td>{{ cart.get_name() }}</td>
+            <td>
+                <form action="" method="POST">
+                    <a href="{{url_for('subtract_quantity', id = cart.get_cart_id())}}">
+                        <input value="-" class = "btn btn-primary btn-sm">
+                    </a>
+                </form>
+                {{cart.get_quantity() }}
+                <form action="" method="POST">
+                    <a href="{{url_for('subtract_quantity', id = cart.get_cart_id())}}">
+                        <input value="+" class = "btn btn-primary btn-sm">
+                    </a>
+                </form>
+            </td>
+            <td> {{ cart.get_price() }}</td>
+            <td>
+            <form action="" method="POST">
+                <a href="{{url_for('remove_from_cart', id = cart.get_cart_id())}}">
+                    <input value="Remove from Cart" class="btn btn-danger">
+                </a>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

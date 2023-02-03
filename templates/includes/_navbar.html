@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-sm navbar-light " style="background-color: #09C6F9;" >
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">SupplyWalrus</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="col-sm-6">
+        <form>
+          <input type="text" class="form-control" placeholder="Search">
+        </form>
+      </div>
+    <div class=" justify-content-start" id="mynavbar">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/displayCart">Cart</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:void(0)">Track</a>
+        </li>
+        <li class="nav-item dropdown ">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Manage Products</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/createProduct">Create Product</a></li>
+            <li><a class="dropdown-item" href="/retrieveProduct">Retrieve Product</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown pull-right">
+        <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown">
+          <img src="{{ url_for('static', filename='image/navbarlogo.png') }}" alt="Avatar Logo" style="width:40px;" class="rounded-pill">
+        </a>
+        <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Login</a></li>
+              <li><a class="dropdown-item" href="#">Sign Up</a></li>
+        </ul>
+      </li>
+      </ul>
+
+    </div>
+  </div>
+</nav>
