@@ -18,12 +18,9 @@ def home():
 @app.route('/add_cart/<string:id>')
 def add_cart(id):
     cart = get_cart('xxx')
-    print(cart.get_count())
     product = get_product(id)
     cart.add_item(product)
     save_cart(cart)
-    cart = get_cart('xxx')
-    print(cart.get_count())
     return render_template('displayCart.html', count=cart.get_count(), cart=cart)
 
 
