@@ -8,10 +8,24 @@ app.debug = True
 
 @app.route('/')
 def home():
-    with shelve.open('product.db') as db:
-        db2 = db['Product']
-        print(db2)
-    return render_template('home.html')
+    # this creates 5 dummy product
+    init_products()
+    # this is to clear cart
+    clear_cart()
+    product_list = get_products()
+    return render_template('home.html', products = product_list)
+
+@app.route('/add_cart/<string:id>')
+def add_cart(id):
+    cart = get_cart('xxx')
+    print(cart.get_count())
+    product = get_product(id)
+    cart.add_item(product)
+    save_cart(cart)
+    cart = get_cart('xxx')
+    print(cart.get_count())
+    return render_template('displayCart.html', count=cart.get_count(), cart=cart)
+
 
 @app.route('/add_to_cart', methods=['POST'])
 def add_to_cart():
@@ -31,9 +45,6 @@ def add_to_cart():
         cart_db.close()
         db.close()
         return "Product added to cart successfully"
-    else:
-        db.close()
-        return "Error: Invalid product key"
 
 @app.route('/displayCart', methods=['GET', 'POST'])
 def display_cart():
@@ -46,7 +57,7 @@ def display_cart():
     cart_db.close()
     return render_template('displayCart.html', count=len(cart_list), cart_list=cart_list)
     
-@app.route('/addQuantity/<int:id>', methods=['POST', 'GET'])
+@app.route('/addQuantity/<string:id>', methods=['POST', 'GET'])
 def add_quantity(id):
     product_key = str(id)
     cart_db = shelve.open("shopping_cart.db", flag='c')
@@ -60,7 +71,7 @@ def add_quantity(id):
         cart_db.close()
         return "Error: Invalid product key"
 
-@app.route('/subtractQuantity/<int:id>', methods=['POST', 'GET'])
+@app.route('/subtractQuantity/<string:id>', methods=['POST', 'GET'])
 def subtract_quantity(id):
     product_key = str(id)
     cart_db = shelve.open("shopping_cart.db", flag='c')
@@ -74,7 +85,7 @@ def subtract_quantity(id):
         cart_db.close()
         return "Error: Invalid product key"
 
-@app.route('/delete_cart/<int:id>', methods = ["POST", "GET"])
+@app.route('/delete_cart/<string:id>', methods = ["POST", "GET"])
 def remove_from_cart(id):
     product_key = str(id)
     print(product_key)
